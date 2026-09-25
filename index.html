@@ -78,30 +78,9 @@ body{
 
 /* ============ App chrome ============ */
 .app{flex:1;display:flex;flex-direction:column;min-height:0;position:relative;background:var(--mu-bg)}
-.statusbar{
-  height:52px;display:flex;align-items:flex-end;justify-content:space-between;
-  padding:0 26px 6px;font-size:14px;font-weight:600;color:var(--mu-ink);
-  position:absolute;top:0;left:0;right:0;z-index:30;pointer-events:none;
-}
-/* progressive gradient blur behind the status text */
-.statusbar::before{
-  content:"";position:absolute;inset:0 0 -14px 0;
-  background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.55) 55%,rgba(255,255,255,0) 100%);
-  backdrop-filter:blur(14px) saturate(150%);
-  -webkit-backdrop-filter:blur(14px) saturate(150%);
-  -webkit-mask-image:linear-gradient(180deg,#000 52%,transparent 100%);
-  mask-image:linear-gradient(180deg,#000 52%,transparent 100%);
-}
-.statusbar > *{position:relative;z-index:1}
-.statusbar .dots{display:flex;gap:5px;align-items:center}
-.statusbar .dots svg{display:block}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:12px}
 @media (max-width:640px){
-  .statusbar{height:max(48px,calc(env(safe-area-inset-top) + 6px))}
-}
-
-.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:52px}
-@media (max-width:640px){
-  .scroll{padding-top:max(52px,calc(env(safe-area-inset-top) + 12px))}
+  .scroll{padding-top:max(12px,calc(env(safe-area-inset-top) + 8px))}
 }
 .scroll::-webkit-scrollbar{display:none}
 
@@ -402,19 +381,6 @@ body{
 <div class="stage">
   <div class="phone">
     <div class="app">
-      <!-- status bar -->
-      <div class="statusbar">
-        <span>9:41</span>
-        <span class="dots">
-          <!-- signal -->
-          <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
-          <!-- wifi -->
-          <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1.4-1.5A11.4 11.4 0 0 0 8.5.2 11.4 11.4 0 0 0 .3 3.4l1.4 1.5A9.4 9.4 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3 .6 4.1 1.6l1.4-1.5A8 8 0 0 0 8.5 3.8a8 8 0 0 0-5.5 2.1l1.4 1.5A6 6 0 0 1 8.5 5.8Zm0 3.5c.8 0 1.5.3 2 .8l-2 2.1-2-2.1c.5-.5 1.2-.8 2-.8Z"/></svg>
-          <!-- battery -->
-          <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="1" y="1" width="21" height="10" rx="3" stroke="currentColor" stroke-opacity=".4"/><rect x="2.5" y="2.5" width="17" height="7" rx="1.6" fill="currentColor"/><rect x="23.5" y="4" width="1.6" height="4" rx="1" fill="currentColor" fill-opacity=".5"/></svg>
-        </span>
-      </div>
-
       <!-- ============ MY PLAN VIEW ============ -->
       <div class="scroll view active" id="view-plan">
         <div class="phdr">
