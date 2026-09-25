@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Clarity — Vision Benefits</title>
+<style>
+/* ============ mu-system tokens ============ */
+:root{
+  --mu-white:#ffffff;
+  --mu-gray-50:#f7f7f8;
+  --mu-gray-100:#f2f2f3;
+  --mu-gray-200:#e8e8ea;
+  --mu-gray-300:#d6d6d9;
+  --mu-gray-400:#b0b0b6;
+  --mu-gray-500:#767680;
+  --mu-gray-600:#6e6e73;
+  --mu-gray-700:#48484d;
+  --mu-gray-800:#2c2c30;
+  --mu-gray-900:#1d1d1f;
+  --mu-ink:var(--mu-gray-900);
+  --mu-ink-2:var(--mu-gray-600);
+  --mu-ink-3:var(--mu-gray-500);
+  --mu-bg:var(--mu-white);
+  --mu-surface:var(--mu-gray-50);
+  --mu-media:var(--mu-gray-100);
+  --mu-border:var(--mu-gray-200);
+  --mu-radius-sm:8px;
+  --mu-radius-md:12px;
+  --mu-radius-lg:16px;
+  --mu-radius-xl:20px;
+  --mu-radius-full:999px;
+  --mu-shadow-sm:0 1px 2px rgba(0,0,0,.05),0 1px 4px rgba(0,0,0,.04);
+  --mu-shadow-md:0 2px 6px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.08);
+  --mu-shadow-lg:0 4px 12px rgba(0,0,0,.08),0 16px 48px rgba(0,0,0,.14);
+  --mu-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Inter,Arial,sans-serif;
+  --mu-mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --mu-ease:cubic-bezier(.25,.1,.25,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:var(--mu-font);
+  color:var(--mu-ink);
+  background:var(--mu-gray-100);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ============ Full-page mobile canvas (no frame) ============ */
+.stage{
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px 20px;
+  background:var(--mu-gray-100);
+}
+.phone{
+  width:100%;
+  max-width:420px;
+  height:calc(100dvh - 48px);
+  max-height:900px;
+  background:var(--mu-bg);
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  border-radius:40px;
+  box-shadow:var(--mu-shadow-lg);
+}
+@media (max-width:640px){
+  .stage{padding:0;background:var(--mu-bg)}
+  .phone{max-width:none;height:100dvh;max-height:none;border-radius:0;box-shadow:none}
+}
+
+/* ============ App chrome ============ */
+.app{flex:1;display:flex;flex-direction:column;min-height:0;position:relative;background:var(--mu-bg)}
+.statusbar{
+  height:52px;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 26px 6px;font-size:14px;font-weight:600;color:var(--mu-ink);
+  position:absolute;top:0;left:0;right:0;z-index:30;pointer-events:none;
+}
+/* progressive gradient blur behind the status text */
+.statusbar::before{
+  content:"";position:absolute;inset:0 0 -14px 0;
+  background:linear-gradient(180deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.55) 55%,rgba(255,255,255,0) 100%);
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  -webkit-mask-image:linear-gradient(180deg,#000 52%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 52%,transparent 100%);
+}
+.statusbar > *{position:relative;z-index:1}
+.statusbar .dots{display:flex;gap:5px;align-items:center}
+.statusbar .dots svg{display:block}
+@media (max-width:640px){
+  .statusbar{height:max(48px,calc(env(safe-area-inset-top) + 6px))}
+}
+
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-top:52px}
+@media (max-width:640px){
+  .scroll{padding-top:max(52px,calc(env(safe-area-inset-top) + 12px))}
+}
+.scroll::-webkit-scrollbar{display:none}
+
+/* ============ Page header ============ */
+.phdr{padding:6px 20px 10px}
+.phdr .eyebrow{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mu-ink-3)}
+.phdr h2{font-size:30px;font-weight:680;letter-spacing:-0.01em;margin-top:3px}
+
+.section-label{
+  font-size:13px;font-weight:640;letter-spacing:.02em;color:var(--mu-ink-2);
+  padding:0 20px;margin:22px 0 10px;display:flex;align-items:center;justify-content:space-between;
+}
+.section-label a{font-size:13px;color:var(--mu-ink-3);text-decoration:none;font-weight:550}
+
+/* ============ Insurance card ============ */
+.wallet{padding:6px 20px 4px}
+.idcard{
+  background:var(--mu-bg);color:var(--mu-ink);border:1px solid var(--mu-border);
+  border-radius:20px;padding:18px 20px;
+  position:relative;overflow:hidden;
+}
+.idcard-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.vsp-logo{width:46px;height:46px;border-radius:10px;object-fit:contain;flex-shrink:0}
+.idcard .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu-ink-3);font-weight:600}
+.idcard .name{font-size:21px;font-weight:650;letter-spacing:-0.01em;margin-top:2px}
+.idcard-planline{font-size:13px;font-weight:400;color:var(--mu-ink-2);margin-top:4px}
+
+/* ============ Go-to clinic card ============ */
+.gotocard{
+  margin:12px 20px 0;background:var(--mu-bg);border:1px solid var(--mu-border);
+  border-radius:20px;padding:14px 16px;cursor:pointer;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.gotocard:active{background:var(--mu-gray-50)}
+.goto-img{
+  width:64px;height:64px;flex-shrink:0;object-fit:cover;display:block;
+  border-radius:14px;background:var(--mu-gray-100);border:1px solid var(--mu-border);
+}
+.goto-body{flex:1;min-width:0}
+.goto-body .badge-net{display:inline-flex;margin-top:8px}
+.goto-name{font-size:16px;font-weight:650;letter-spacing:-0.01em}
+.goto-row{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--mu-ink-2);line-height:1.4;margin-top:7px}
+.goto-row + .goto-row{margin-top:1px}
+.goto-row svg{flex-shrink:0;color:var(--mu-gray-400);margin-top:1px}
+.goto-open{color:#2f6b34;font-weight:600}
+.idcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;margin-top:16px}
+.idcard-field{min-width:0}
+.idcard-field .k{margin-bottom:5px}
+.idcard-field .v{font-size:14px;font-weight:600;font-family:var(--mu-mono);letter-spacing:.01em;white-space:nowrap}
+.idcard-plan{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.idcard-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:15px;padding-top:14px;border-top:1px solid var(--mu-border);
+}
+.idcard-foot .reset{display:flex;align-items:baseline;gap:7px;min-width:0}
+.idcard-foot .reset .rk{font-size:12px;color:var(--mu-ink-3)}
+.idcard-foot .reset .rv{font-size:14px;font-weight:600}
+.chip{
+  font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
+  background:#eef7ee;color:#2f6b34;padding:4px 10px;border-radius:var(--mu-radius-full);
+  display:inline-flex;align-items:center;gap:5px;flex-shrink:0;
+}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+
+
+/* ============ Checklist ============ */
+.checklist{
+  margin:0 20px;border:1px solid var(--mu-border);border-radius:var(--mu-radius-lg);overflow:hidden;
+}
+.crow{
+  display:flex;align-items:center;gap:14px;padding:15px 16px;background:var(--mu-bg);
+  cursor:pointer;border-bottom:1px solid var(--mu-border);
+}
+.crow:last-child{border-bottom:none}
+.crow:active{background:var(--mu-gray-50)}
+.cbox{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  border:1.8px solid var(--mu-gray-300);background:var(--mu-bg);
+  display:grid;place-items:center;color:transparent;
+}
+.crow.done .cbox{background:#2f6b34;border-color:#2f6b34;color:#fff}
+.crow-body{flex:1;min-width:0}
+.crow-title{font-size:15px;font-weight:600;letter-spacing:-0.01em}
+.crow-sub{font-size:13px;color:var(--mu-ink-3);margin-top:2px;line-height:1.4}
+.crow-tag{
+  display:inline-flex;align-items:center;gap:5px;margin-top:8px;
+  font-size:11.5px;font-weight:600;letter-spacing:.01em;
+  background:#eef7ee;color:#2f6b34;padding:4px 9px;border-radius:var(--mu-radius-full);
+}
+.crow-tag::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* ============ Benefit cards (2-col) ============ */
+.cards{padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bcard{
+  border:1px solid var(--mu-border);border-radius:var(--mu-radius-lg);
+  padding:16px;display:flex;flex-direction:column;background:var(--mu-bg);
+  transition:transform var(--mu-fast,.15s) var(--mu-ease),box-shadow var(--mu-fast,.15s) var(--mu-ease);
+  cursor:pointer;min-width:0;
+}
+.bcard.wide{grid-column:1 / -1}
+.bcard:active{transform:scale(.99);box-shadow:var(--mu-shadow-sm)}
+.bcard-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bicon{
+  flex-shrink:0;color:var(--mu-ink);display:grid;place-items:center;
+}
+.bcard-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mu-ink-3);margin-top:0}
+.bcard-amt{font-size:23px;font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin-top:4px}
+.bcard-sub{font-size:12px;color:var(--mu-ink-3);line-height:1.4;margin-top:8px}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;margin-top:auto;align-self:flex-start;
+  font-size:11px;font-weight:600;letter-spacing:.02em;
+  background:var(--mu-gray-100);color:var(--mu-gray-700);
+  padding:4px 8px;border-radius:var(--mu-radius-full);
+}
+.bcard-sub{margin-bottom:12px}
+.pill.ok{background:#eef7ee;color:#2f6b34}
+.pill .dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.chev-sm{color:var(--mu-gray-300)}
+.viewall{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin:12px 20px 0;padding:13px;width:calc(100% - 40px);
+  background:var(--mu-bg);border:1px solid var(--mu-border);border-radius:var(--mu-radius-md);
+  font-family:inherit;font-size:14.5px;font-weight:600;color:var(--mu-ink);cursor:pointer;
+}
+.viewall:active{background:var(--mu-gray-50)}
+.viewall svg{color:var(--mu-gray-400)}
+
+/* all-benefits sub-page */
+.blist{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.brow2{border:1px solid var(--mu-border);border-radius:var(--mu-radius-lg);padding:16px}
+.brow2-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.brow2-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mu-ink-3)}
+.brow2-amt{font-size:20px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap}
+.brow2-sub{font-size:13px;color:var(--mu-ink-2);line-height:1.5;margin-top:8px}
+.brow2-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--mu-border)}
+.brow2-foot .fk{font-size:12px;color:var(--mu-ink-3)}
+.brow2-foot .fv{font-size:13px;font-weight:600}
+
+/* ============ Record row ============ */
+.rowlist{display:flex;flex-direction:column;gap:0;
+  border:1px solid var(--mu-border);border-radius:var(--mu-radius-lg);margin:0 20px;overflow:hidden}
+.rrow{
+  display:flex;align-items:center;gap:14px;padding:15px 16px;background:var(--mu-bg);
+  cursor:pointer;border-bottom:1px solid var(--mu-border);
+}
+.rrow:last-child{border-bottom:none}
+.rrow:active{background:var(--mu-gray-50)}
+.ricon{width:40px;height:40px;border-radius:11px;background:var(--mu-gray-100);color:var(--mu-gray-700);
+  display:grid;place-items:center;flex-shrink:0}
+.rrow-body{flex:1;min-width:0}
+.rrow-title{font-size:15px;font-weight:600;letter-spacing:-0.01em}
+.rrow-sub{font-size:13px;color:var(--mu-ink-3);margin-top:2px}
+.chev{color:var(--mu-gray-400);flex-shrink:0}
+.addrow .ricon{background:transparent;border:1px dashed var(--mu-gray-300);color:var(--mu-gray-500)}
+.addrow .rrow-title{color:var(--mu-ink-2);font-weight:550}
+
+/* ============ Discover: search + location ============ */
+.searchbar{
+  margin:4px 20px 2px;display:flex;align-items:center;gap:10px;
+  background:var(--mu-gray-100);border-radius:var(--mu-radius-full);padding:12px 16px;
+  color:var(--mu-ink-3);font-size:15px;cursor:text;
+}
+.searchbar input{
+  border:none;background:transparent;outline:none;flex:1;font-size:15px;font-family:inherit;color:var(--mu-ink);
+}
+.searchbar input::placeholder{color:var(--mu-gray-400)}
+.locrow{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px;
+}
+.locrow .loc{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600}
+.locrow .count{font-size:13px;color:var(--mu-ink-3);font-weight:500}
+
+/* filter chips */
+.chips{display:flex;gap:8px;padding:8px 20px 4px;overflow-x:auto}
+.chips::-webkit-scrollbar{display:none}
+.chip2{
+  flex-shrink:0;font-size:13px;font-weight:500;padding:7px 13px;border-radius:var(--mu-radius-full);
+  border:1px solid var(--mu-border);color:var(--mu-gray-700);background:var(--mu-bg);cursor:pointer;white-space:nowrap;
+}
+.chip2.on{background:var(--mu-gray-900);color:#fff;border-color:var(--mu-gray-900)}
+
+/* clinic card */
+.clinics{padding:8px 20px 20px;display:flex;flex-direction:column;gap:12px}
+.clinic{
+  border:1px solid var(--mu-border);border-radius:var(--mu-radius-lg);padding:14px;
+  display:flex;gap:14px;cursor:pointer;background:var(--mu-bg);
+}
+.clinic:active{background:var(--mu-gray-50)}
+.clinic-thumb{
+  width:58px;height:58px;flex-shrink:0;border-radius:12px;background:var(--mu-gray-100);
+  display:grid;place-items:center;color:var(--mu-gray-500);font-weight:640;font-size:18px;
+  overflow:hidden;
+}
+.clinic-body{flex:1;min-width:0}
+.clinic-name{font-size:15.5px;font-weight:640;letter-spacing:-0.01em}
+.clinic-body .badge-net{display:inline-flex;margin-bottom:5px}
+.badge-net{font-size:10.5px;font-weight:650;letter-spacing:.02em;text-transform:uppercase;
+  background:#eef7ee;color:#2f6b34;padding:3px 7px;border-radius:6px;flex-shrink:0}
+.clinic-meta{font-size:13px;color:var(--mu-ink-2);margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.stars{display:inline-flex;align-items:center;gap:3px;font-weight:600;color:var(--mu-ink)}
+.mdot{width:3px;height:3px;border-radius:50%;background:var(--mu-gray-400)}
+.clinic-tags{font-size:12.5px;color:var(--mu-ink-3);margin-top:6px}
+.brandrow{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.brandrow .bchip{
+  font-size:11px;font-weight:500;letter-spacing:.01em;color:var(--mu-gray-700);
+  background:var(--mu-gray-100);border:1px solid var(--mu-border);
+  padding:3px 8px;border-radius:var(--mu-radius-full);white-space:nowrap;
+}
+.brandrow .bmore{color:var(--mu-ink-3);font-weight:600;align-self:center}
+
+/* ============ Bottom nav ============ */
+.tabbar{
+  flex-shrink:0;display:flex;background:rgba(255,255,255,.86);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--mu-border);
+  padding-bottom:calc(env(safe-area-inset-bottom) + 20px);
+  position:relative;z-index:20;
+}
+.tab{
+  flex:1;background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:9px 0 8px;color:var(--mu-gray-400);font-family:inherit;
+}
+.tab span{font-size:11px;font-weight:550;letter-spacing:.01em}
+.tab.on{color:var(--mu-ink)}
+.tab svg{display:block}
+
+/* ============ Sub-page (record detail / clinic detail) ============ */
+.subpage{
+  position:absolute;inset:0;background:var(--mu-bg);z-index:40;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .28s var(--mu-ease);will-change:transform;
+}
+.subpage.open{transform:translateX(0)}
+.subbar{
+  height:52px;flex-shrink:0;display:flex;align-items:center;gap:6px;padding:0 12px;
+  border-bottom:1px solid var(--mu-border);
+}
+.backbtn{
+  display:flex;align-items:center;gap:3px;background:none;border:none;cursor:pointer;
+  font-family:inherit;font-size:16px;color:var(--mu-ink);font-weight:500;padding:8px 6px;
+}
+.subbar .subtitle{font-size:16px;font-weight:640;margin-left:2px}
+
+/* document */
+.docwrap{flex:1;overflow-y:auto;padding:20px}
+.docwrap::-webkit-scrollbar{display:none}
+.paper{
+  background:var(--mu-bg);border:1px solid var(--mu-border);border-radius:var(--mu-radius-md);
+  box-shadow:var(--mu-shadow-sm);overflow:hidden;
+}
+.paper-head{padding:20px 20px 16px;border-bottom:1px solid var(--mu-border)}
+.paper-head .rx-brand{display:flex;align-items:center;justify-content:space-between}
+.paper-head .rx-brand .bn{font-size:15px;font-weight:650;letter-spacing:-0.01em}
+.paper-head .rx-brand .rx{font-family:var(--mu-mono);font-size:12px;color:var(--mu-ink-3)}
+.paper-head h3{font-size:19px;font-weight:660;letter-spacing:-0.01em;margin-top:14px}
+.paper-head .pmeta{font-size:13px;color:var(--mu-ink-2);margin-top:5px;line-height:1.5}
+.paper-sec{padding:16px 20px;border-bottom:1px solid var(--mu-border)}
+.paper-sec:last-child{border-bottom:none}
+.paper-sec .sh{font-size:12px;font-weight:640;letter-spacing:.05em;text-transform:uppercase;color:var(--mu-ink-3);margin-bottom:10px}
+.rxtable{width:100%;border-collapse:collapse;font-size:14px}
+.rxtable th{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mu-ink-3);font-weight:600;text-align:left;padding:0 8px 8px 0}
+.rxtable th:first-child{text-align:left}
+.rxtable td{padding:9px 8px 9px 0;font-family:var(--mu-mono);font-size:14px;border-top:1px solid var(--mu-border)}
+.rxtable td:first-child{font-family:var(--mu-font);font-weight:600}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:7px 0}
+.kv .kk{color:var(--mu-ink-2)}
+.kv .vv{font-weight:600}
+.docnote{font-size:12.5px;color:var(--mu-ink-3);text-align:center;margin-top:16px;line-height:1.5}
+.dlbtn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;
+  background:var(--mu-gray-900);color:#fff;border:none;border-radius:var(--mu-radius-md);
+  padding:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;
+}
+.dlbtn:active{background:var(--mu-gray-800)}
+
+/* clinic detail */
+.cd-hero{padding:20px;border-bottom:1px solid var(--mu-border)}
+.cd-hero h3{font-size:22px;font-weight:680;letter-spacing:-0.01em}
+.cd-hero .cd-meta{font-size:13.5px;color:var(--mu-ink-2);margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cd-block{padding:16px 20px;border-bottom:1px solid var(--mu-border)}
+.cd-block .sh{font-size:12px;font-weight:640;letter-spacing:.05em;text-transform:uppercase;color:var(--mu-ink-3);margin-bottom:10px}
+.cd-block .line{font-size:14.5px;color:var(--mu-gray-800);line-height:1.6}
+.cta{
+  display:flex;gap:10px;padding:16px 20px;
+}
+.cta button{flex:1;border-radius:var(--mu-radius-md);padding:14px;font-size:15px;font-weight:620;font-family:inherit;cursor:pointer;border:1px solid var(--mu-gray-900)}
+.cta .primary{background:var(--mu-gray-900);color:#fff}
+.cta .ghost{background:var(--mu-bg);color:var(--mu-ink)}
+
+.spacer{height:26px}
+
+/* view toggling */
+.view{display:none}
+.view.active{display:block}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone">
+    <div class="app">
+      <!-- status bar -->
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="dots">
+          <!-- signal -->
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <!-- wifi -->
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2.2c2.6 0 5 1 6.8 2.7l1.4-1.5A11.4 11.4 0 0 0 8.5.2 11.4 11.4 0 0 0 .3 3.4l1.4 1.5A9.4 9.4 0 0 1 8.5 2.2Zm0 3.6c1.6 0 3 .6 4.1 1.6l1.4-1.5A8 8 0 0 0 8.5 3.8a8 8 0 0 0-5.5 2.1l1.4 1.5A6 6 0 0 1 8.5 5.8Zm0 3.5c.8 0 1.5.3 2 .8l-2 2.1-2-2.1c.5-.5 1.2-.8 2-.8Z"/></svg>
+          <!-- battery -->
+          <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="1" y="1" width="21" height="10" rx="3" stroke="currentColor" stroke-opacity=".4"/><rect x="2.5" y="2.5" width="17" height="7" rx="1.6" fill="currentColor"/><rect x="23.5" y="4" width="1.6" height="4" rx="1" fill="currentColor" fill-opacity=".5"/></svg>
+        </span>
+      </div>
+
+      <!-- ============ MY PLAN VIEW ============ -->
+      <div class="scroll view active" id="view-plan">
+        <div class="phdr">
+          <h2>My Plan</h2>
+        </div>
+
+        <!-- digital insurance card (compact) -->
+        <div class="wallet">
+          <div class="idcard">
+            <div class="idcard-head">
+              <div>
+                <div class="name">Alex Chen</div>
+                <div class="idcard-planline">VSP Signature · Meta</div>
+              </div>
+              <img class="vsp-logo" src="vsp.webp" alt="VSP" />
+            </div>
+            <div class="idcard-foot">
+              <div class="reset"><span class="rk">Member ID</span><span class="rv">187721</span></div>
+              <span class="chip">Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- go-to clinic -->
+        <div class="section-label">Your go-to clinic</div>
+        <div class="gotocard" onclick="openClinic('c1')">
+          <div class="goto-body">
+            <div class="goto-name">20/20 Eye Club Optometry</div>
+            <div class="goto-row"><span><span class="goto-open">Open</span> · Closes 6 PM · Mon–Sat</span></div>
+            <div class="goto-row"><span>799 E El Camino Real #200, Sunnyvale, CA</span></div>
+            <span class="badge-net">In-network</span>
+          </div>
+          <img class="goto-img" src="shop.webp" alt="20/20 Eye Club Optometry" />
+        </div>
+
+        <!-- 2026 checklist -->
+        <div class="section-label">Your 2026 benefits</div>
+        <div class="checklist">
+
+          <div class="crow done" onclick="openRecord()">
+            <span class="cbox"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div class="crow-body">
+              <div class="crow-title">Vision prescription</div>
+              <div class="crow-sub">Valid from 04/28/2026 to 04/27/2027</div>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+
+          <div class="crow" onclick="openClinic('frames')">
+            <span class="cbox"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div class="crow-body">
+              <div class="crow-title">2 pairs of Frames &amp; Lenses</div>
+              <div class="crow-sub">$300 allowance + 20% off for extra cost</div>
+              <span class="crow-tag">Eligible for non-prescription sunglasses</span>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+
+          <div class="crow" onclick="openClinic('exam')">
+            <span class="cbox"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div class="crow-body">
+              <div class="crow-title">Eye exams</div>
+              <div class="crow-sub">$0 copay · 3 free exams per year</div>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+
+          <div class="crow done" onclick="openClinic('laser')">
+            <span class="cbox"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div class="crow-body">
+              <div class="crow-title">Laser vision</div>
+              <div class="crow-sub">$4,000 off per lifetime</div>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
+
+        <button class="viewall" onclick="openSub('sub-benefits')">
+          View all benefits
+          <svg width="8" height="14" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <!-- records -->
+        <div class="section-label">Records</div>
+        <div class="rowlist" style="margin:0 20px">
+          <div class="rrow" onclick="openRecord()">
+            <div class="ricon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 2.5h8l4 4v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-18a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.7"/><path d="M14 2.5V6.5H18M8.5 12h7M8.5 15.5h7M8.5 19h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </div>
+            <div class="rrow-body">
+              <div class="rrow-title">Vision Prescription</div>
+              <div class="rrow-sub">Last record · Jul 23, 2026</div>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="rrow" onclick="openRecord()">
+            <div class="ricon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5h16v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-14Z" stroke="currentColor" stroke-width="1.7"/><path d="M4 9h16M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </div>
+            <div class="rrow-body">
+              <div class="rrow-title">Exam History</div>
+              <div class="rrow-sub">Last exam · Jul 23, 2026</div>
+            </div>
+            <span class="chev"><svg width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M1 1l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="rrow addrow" onclick="alert('Upload a new record')">
+            <div class="ricon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+            </div>
+            <div class="rrow-body">
+              <div class="rrow-title">Add item</div>
+            </div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ============ DISCOVER VIEW ============ -->
+      <div class="scroll view" id="view-discover">
+        <div class="phdr">
+          <h2>Discover</h2>
+        </div>
+
+        <div class="searchbar" onclick="this.querySelector('input').focus()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input placeholder="Search optometrists, brands, glasses" />
+        </div>
+
+        <div class="locrow">
+          <div class="loc">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.9"/></svg>
+            Sunnyvale, CA
+          </div>
+          <div class="count">12 optometrists found</div>
+        </div>
+
+        <div class="chips">
+          <div class="chip2 on">In-network</div>
+          <div class="chip2">Open now</div>
+          <div class="chip2">Top rated</div>
+          <div class="chip2">Accepts VSP</div>
+          <div class="chip2">Kids</div>
+        </div>
+
+        <div class="clinics">
+
+          <div class="clinic" onclick="openClinic('c1')">
+            <div class="clinic-thumb">20</div>
+            <div class="clinic-body">
+              <div class="clinic-name">20/20 Eye Club Optometry</div>
+              <div class="clinic-meta"><span class="stars">★ 4.2</span><span class="mdot"></span>173 Google reviews</div>
+              <div class="clinic-tags">Optometrist in Sunnyvale · <b style="color:#2f6b34;font-weight:600">Open</b> · Closes 6 PM</div>
+              <div class="clinic-tags" style="margin-top:4px">799 E El Camino Real #200 · (408) 248-2020</div>
+            </div>
+          </div>
+
+          <div class="clinic" onclick="openClinic('c2')">
+            <div class="clinic-thumb">SE</div>
+            <div class="clinic-body">
+              <div class="clinic-name">Sunnyvale Eye Care</div>
+              <div class="clinic-meta"><span class="stars">★ 4.8</span><span class="mdot"></span>96 reviews<span class="mdot"></span>1.1 mi</div>
+              <div class="clinic-tags">Full $300 frame allowance accepted</div>
+              <div class="brandrow"><span class="bchip">Chanel</span><span class="bchip">Gucci</span><span class="bchip">Persol</span><span class="bmore">+4</span></div>
+            </div>
+          </div>
+
+          <div class="clinic" onclick="openClinic('c3')">
+            <div class="clinic-thumb">EV</div>
+            <div class="clinic-body">
+              <div class="clinic-name">EyeWorks Vision Center</div>
+              <div class="clinic-meta"><span class="stars">★ 4.7</span><span class="mdot"></span>210 reviews<span class="mdot"></span>1.4 mi</div>
+              <div class="clinic-tags">Contact lens fitting · Same-day appointments</div>
+              <div class="brandrow"><span class="bchip">Acuvue</span><span class="bchip">Warby Parker</span><span class="bchip">Oakley</span><span class="bmore">+5</span></div>
+            </div>
+          </div>
+
+          <div class="clinic" onclick="openClinic('c4')">
+            <div class="clinic-thumb">CV</div>
+            <div class="clinic-body">
+              <div class="clinic-name">Clear View Optical</div>
+              <div class="clinic-meta"><span class="stars">★ 4.6</span><span class="mdot"></span>73 reviews<span class="mdot"></span>2.0 mi</div>
+              <div class="clinic-tags">Out-of-network · Reimbursement available</div>
+              <div class="brandrow"><span class="bchip">Ray-Ban</span><span class="bchip">Coach</span><span class="bchip">Costa</span><span class="bmore">+3</span></div>
+            </div>
+          </div>
+
+          <div class="clinic" onclick="openClinic('c5')">
+            <div class="clinic-thumb">FP</div>
+            <div class="clinic-body">
+              <div class="clinic-name">Focal Point Eyewear</div>
+              <div class="clinic-meta"><span class="stars">★ 4.8</span><span class="mdot"></span>154 reviews<span class="mdot"></span>2.3 mi</div>
+              <div class="clinic-tags">Designer frames · 20% off extras honored</div>
+              <div class="brandrow"><span class="bchip">Prada</span><span class="bchip">Chanel</span><span class="bchip">Tom Ford</span><span class="bmore">+7</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ============ SUB-PAGE: RECORD DOCUMENT ============ -->
+      <div class="subpage" id="sub-record">
+        <div class="subbar">
+          <button class="backbtn" onclick="closeSub('sub-record')">
+            <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1L1.5 8.5l7 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <span class="subtitle">Vision Prescription</span>
+        </div>
+        <div class="docwrap">
+          <div class="paper">
+            <div class="paper-head">
+              <div class="rx-brand">
+                <span class="bn">Bay Vision Optometry</span>
+                <span class="rx">Rx #VP-2026-0723</span>
+              </div>
+              <h3>Eyeglass Prescription</h3>
+              <div class="pmeta">Alex Chen · DOB 04/12/1991<br>Examined Jul 23, 2026 · Dr. Naomi Patel, O.D.</div>
+            </div>
+
+            <div class="paper-sec">
+              <div class="sh">Prescription</div>
+              <table class="rxtable">
+                <thead><tr><th>Eye</th><th>SPH</th><th>CYL</th><th>Axis</th><th>Add</th></tr></thead>
+                <tbody>
+                  <tr><td>OD (R)</td><td>−2.25</td><td>−0.50</td><td>175</td><td>—</td></tr>
+                  <tr><td>OS (L)</td><td>−2.00</td><td>−0.75</td><td>010</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="paper-sec">
+              <div class="sh">Measurements</div>
+              <div class="kv"><span class="kk">Pupillary distance (PD)</span><span class="vv">63 mm</span></div>
+              <div class="kv"><span class="kk">Lens type</span><span class="vv">Single vision</span></div>
+              <div class="kv"><span class="kk">Recommended</span><span class="vv">Anti-reflective</span></div>
+            </div>
+
+            <div class="paper-sec">
+              <div class="sh">Validity</div>
+              <div class="kv"><span class="kk">Issued</span><span class="vv">Jul 23, 2026</span></div>
+              <div class="kv"><span class="kk">Expires</span><span class="vv">Jul 23, 2028</span></div>
+            </div>
+          </div>
+
+          <button class="dlbtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download PDF
+          </button>
+          <div class="docnote">This prescription is valid for use at any in-network provider. Present your Member ID 187721 at checkout.</div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
+      <!-- ============ SUB-PAGE: CLINIC / BENEFIT DETAIL ============ -->
+      <div class="subpage" id="sub-clinic">
+        <div class="subbar">
+          <button class="backbtn" onclick="closeSub('sub-clinic')">
+            <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1L1.5 8.5l7 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <span class="subtitle" id="clinic-subtitle">Provider</span>
+        </div>
+        <div class="docwrap" style="padding:0">
+          <div class="cd-hero">
+            <h3 id="cd-name">Bay Vision Optometry</h3>
+            <div class="cd-meta" id="cd-meta"><span class="stars">★ 4.9</span><span class="mdot"></span>128 reviews<span class="mdot"></span>0.6 mi · Sunnyvale, CA</div>
+          </div>
+          <div class="cd-block">
+            <div class="sh">Your coverage here</div>
+            <div class="line" id="cd-coverage">In-network · $0 exam copay · $300 frame allowance + 20% off extras. Your VSP Signature benefits apply automatically at checkout.</div>
+          </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
+      <!-- ============ SUB-PAGE: ALL BENEFITS ============ -->
+      <div class="subpage" id="sub-benefits">
+        <div class="subbar">
+          <button class="backbtn" onclick="closeSub('sub-benefits')">
+            <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M8.5 1L1.5 8.5l7 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back
+          </button>
+          <span class="subtitle">All Benefits</span>
+        </div>
+        <div class="docwrap" style="padding:0">
+          <div class="blist">
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Eye Exams</div><div class="brow2-amt">$0 copay</div></div>
+              <div class="brow2-sub">One comprehensive exam every 12 months, including retinal imaging and an updated prescription, at any in-network provider.</div>
+              <div class="brow2-foot"><span class="fk">Frequency</span><span class="fv">Every 12 months</span></div>
+            </div>
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Frames &amp; Lenses</div><div class="brow2-amt">2 pairs</div></div>
+              <div class="brow2-sub">$300 allowance toward frames and lenses, plus 20% off any cost above the allowance. Covers up to 2 pairs per benefit period.</div>
+              <div class="brow2-foot"><span class="fk">Remaining</span><span class="fv">2 of 2</span></div>
+            </div>
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Contact Lenses</div><div class="brow2-amt">$150</div></div>
+              <div class="brow2-sub">Annual allowance toward contact lenses, plus a covered contact-lens fitting and evaluation. Used in lieu of the frame allowance.</div>
+              <div class="brow2-foot"><span class="fk">Status</span><span class="fv">In lieu of frames</span></div>
+            </div>
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Laser VisionCare</div><div class="brow2-amt">1 in lifetime</div></div>
+              <div class="brow2-sub">A one-time lifetime discount toward laser correction: 15% off LASIK, or 5% off promotional pricing, at contracted laser centers.</div>
+              <div class="brow2-foot"><span class="fk">Frequency</span><span class="fv">Once per lifetime</span></div>
+            </div>
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Lens Enhancements</div><div class="brow2-amt">Covered</div></div>
+              <div class="brow2-sub">Anti-reflective, scratch-resistant, and UV coatings covered in full. Progressive and photochromic lenses available at a discount.</div>
+              <div class="brow2-foot"><span class="fk">Applies to</span><span class="fv">Standard lenses</span></div>
+            </div>
+
+            <div class="brow2">
+              <div class="brow2-top"><div class="brow2-title">Retinal Screening</div><div class="brow2-amt">$39</div></div>
+              <div class="brow2-sub">Optional digital retinal imaging add-on at a fixed member rate, available during your covered comprehensive exam.</div>
+              <div class="brow2-foot"><span class="fk">Type</span><span class="fv">Add-on</span></div>
+            </div>
+
+          </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
+      <!-- ============ BOTTOM NAV ============ -->
+      <div class="tabbar">
+        <button class="tab on" id="tab-plan" onclick="switchView('plan')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="5" width="19" height="14" rx="3" stroke="currentColor" stroke-width="1.9"/><path d="M2.5 9.5h19M6.5 14.5h5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>My Plan</span>
+        </button>
+        <button class="tab" id="tab-discover" onclick="switchView('discover')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7.5" stroke="currentColor" stroke-width="1.9"/><path d="M20.5 20.5L16.5 16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>Discover</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function switchView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.getElementById('tab-discover').classList.toggle('on', name==='discover');
+  document.getElementById('tab-plan').classList.toggle('on', name==='plan');
+  // scroll active view to top
+  document.getElementById('view-'+name).scrollTop = 0;
+}
+function openSub(id){ document.getElementById(id).classList.add('open'); }
+function openRecord(){ document.getElementById('sub-record').classList.add('open'); }
+function closeSub(id){ document.getElementById(id).classList.remove('open'); }
+
+const CLINICS = {
+  c1:{name:'20/20 Eye Club Optometry', meta:'★ 4.2 · 173 Google reviews · Sunnyvale, CA', cov:'In-network · $0 exam copay · $300 frame allowance + 20% off extras. Your VSP Signature benefits apply automatically at checkout.'},
+  c2:{name:'Sunnyvale Eye Care', meta:'★ 4.8 · 96 reviews · 1.1 mi · Sunnyvale, CA', cov:'In-network · $0 exam copay · Full $300 frame allowance accepted. Book a covered comprehensive exam today.'},
+  c3:{name:'EyeWorks Vision Center', meta:'★ 4.7 · 210 reviews · 1.4 mi · Sunnyvale, CA', cov:'In-network · Contact lens fitting covered · $150 contacts allowance applies. Same-day appointments available.'},
+  c4:{name:'Clear View Optical', meta:'★ 4.6 · 73 reviews · 2.0 mi · Sunnyvale, CA', cov:'Out-of-network · Pay upfront and submit for reimbursement. You may receive a reduced allowance for your VSP Signature plan.'},
+  c5:{name:'Focal Point Eyewear', meta:'★ 4.8 · 154 reviews · 2.3 mi · Sunnyvale, CA', cov:'In-network · Designer frames with your $300 allowance + 20% off any amount over. Lens upgrades discounted.'},
+  exam:{name:'Eye Exams — $0 copay', meta:'Benefit · Once every 12 months', cov:'A comprehensive eye exam is fully covered with a $0 copay at any in-network provider — including retinal imaging and an updated prescription. Find a provider near you to use it.'},
+  frames:{name:'Frames & Lenses — 2 Pairs', meta:'Benefit · $300 allowance', cov:'Use up to $300 toward frames and lenses, plus 20% off any cost above the allowance. Covers up to 2 pairs, or a supply of contacts in lieu of frames.'},
+  contacts:{name:'Contact Lenses — $150', meta:'Benefit · Annual allowance', cov:'$150 toward contact lenses each year, plus a covered contact-lens fitting and evaluation. Used in lieu of the frame allowance.'},
+  laser:{name:'Laser VisionCare — 1 in lifetime', meta:'Benefit · Once per lifetime', cov:'A one-time lifetime discount toward laser vision correction: 15% off the regular price of LASIK, or 5% off promotional pricing, at contracted laser centers. Find a participating center to redeem it.'}
+};
+function openClinic(key){
+  const c = CLINICS[key] || CLINICS.c1;
+  document.getElementById('cd-name').textContent = c.name;
+  document.getElementById('cd-meta').innerHTML = c.meta.replace(/★ [\d.]+/, m=>'<span class="stars">'+m+'</span>');
+  document.getElementById('cd-coverage').textContent = c.cov;
+  document.getElementById('clinic-subtitle').textContent = /^c\d/.test(key) ? 'Provider' : 'Benefit';
+  document.getElementById('sub-clinic').classList.add('open');
+}
+</script>
+</body>
+</html>
